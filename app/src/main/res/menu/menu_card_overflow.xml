@@ -1,0 +1,7 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="Forget" />
+    <item android:title="Activity" />
+    <item android:title="Apps" />
+    <item android:title="Alarms" />
+    <item android:title="Find" />
+</menu>

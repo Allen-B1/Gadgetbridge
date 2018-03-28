@@ -25,8 +25,10 @@ import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.transition.TransitionManager;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,9 +81,34 @@ public class GBDeviceAdapterv2 extends RecyclerView.Adapter<GBDeviceAdapterv2.Vi
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
+
         final GBDevice device = deviceList.get(position);
         final DeviceCoordinator coordinator = DeviceHelper.getInstance().getCoordinator(device);
+        // obviously replace with more translatable string
+        holder.deviceInfoList.setText(
+                "Firmware " + device.getFirmwareVersion() + "\n" +
+                "Model " + device.getModel());
 
+        holder.deviceNameLabel.setText(getUniqueDeviceName(device));
+
+        if (device.isBusy()) {
+            holder.deviceStatusLabel.setText(device.getBusyTask());
+        //    holder.busyIndicator.setVisibility(View.VISIBLE);
+        } else {
+            holder.deviceStatusLabel.setText(device.getStateString());
+        //    holder.busyIndicator.setVisibility(View.INVISIBLE);
+        }
+
+        holder.menuButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu menu = new PopupMenu(context, v);
+                menu.inflate(R.menu.menu_card_overflow);
+                menu.setGravity(Gravity.END | Gravity.TOP);
+                menu.show();
+            }
+        });
+        /*
         holder.container.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -109,15 +136,8 @@ public class GBDeviceAdapterv2 extends RecyclerView.Adapter<GBDeviceAdapterv2.Vi
         //level-list does not allow negative values, hence we always add 100 to the key.
         holder.deviceImageView.setImageLevel(device.getType().getKey() + 100 + (device.isInitialized() ? 100 : 0));
 
-        holder.deviceNameLabel.setText(getUniqueDeviceName(device));
 
-        if (device.isBusy()) {
-            holder.deviceStatusLabel.setText(device.getBusyTask());
-            holder.busyIndicator.setVisibility(View.VISIBLE);
-        } else {
-            holder.deviceStatusLabel.setText(device.getStateString());
-            holder.busyIndicator.setVisibility(View.INVISIBLE);
-        }
+
 
         //begin of action row
         //battery
@@ -311,6 +331,7 @@ public class GBDeviceAdapterv2 extends RecyclerView.Adapter<GBDeviceAdapterv2.Vi
                         .show();
             }
         });
+        */
 
     }
 
@@ -323,10 +344,13 @@ public class GBDeviceAdapterv2 extends RecyclerView.Adapter<GBDeviceAdapterv2.Vi
 
         CardView container;
 
-        ImageView deviceImageView;
+//        ImageView deviceImageView;
         TextView deviceNameLabel;
         TextView deviceStatusLabel;
 
+        ImageView menuButton;
+
+        /*
         //actions
         LinearLayout batteryStatusBox;
         TextView batteryStatusLabel;
@@ -342,19 +366,26 @@ public class GBDeviceAdapterv2 extends RecyclerView.Adapter<GBDeviceAdapterv2.Vi
         ImageView deviceInfoView;
         //overflow
         final RelativeLayout deviceInfoBox;
-        ListView deviceInfoList;
         ImageView findDevice;
         ImageView removeDevice;
+        */
+
+
+        TextView deviceInfoList;
 
         ViewHolder(View view) {
             super(view);
             container = (CardView) view.findViewById(R.id.card_view);
 
-            deviceImageView = (ImageView) view.findViewById(R.id.device_image);
+//            deviceImageView = (ImageView) view.findViewById(R.id.device_image);
             deviceNameLabel = (TextView) view.findViewById(R.id.device_name);
             deviceStatusLabel = (TextView) view.findViewById(R.id.device_status);
 
-            //actions
+            deviceInfoList = (TextView) view.findViewById(R.id.device_item_infos);
+
+            menuButton = (ImageView) view.findViewById(R.id.device_info_image);
+
+            /* actions
             batteryStatusBox = (LinearLayout) view.findViewById(R.id.device_battery_status_box);
             batteryStatusLabel = (TextView) view.findViewById(R.id.battery_status);
             batteryIcon = (ImageView) view.findViewById(R.id.device_battery_status);
@@ -369,9 +400,9 @@ public class GBDeviceAdapterv2 extends RecyclerView.Adapter<GBDeviceAdapterv2.Vi
 
             deviceInfoBox = (RelativeLayout) view.findViewById(R.id.device_item_infos_box);
             //overflow
-            deviceInfoList = (ListView) view.findViewById(R.id.device_item_infos);
             findDevice = (ImageView) view.findViewById(R.id.device_action_find);
             removeDevice = (ImageView) view.findViewById(R.id.device_action_remove);
+            */
         }
 
     }
