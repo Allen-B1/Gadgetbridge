@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:background="#EEE"
     tools:context="nodomain.freeyourgadget.gadgetbridge.activities.ControlCenterv2">
 
     <android.support.design.widget.AppBarLayout
